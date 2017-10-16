@@ -18,30 +18,21 @@ int length = 0;
 //------------
 
 char **takeInput(){
-
     int index = 0;
     char **command =(char**) calloc(1024,sizeof(char));
-
     int k =0;
     char buffer [1024];
-
     int dquoted =0;
     int squoted =0;
-
     int c;
     printf("sish:> ");
     while(1){
-
         c = getchar();
-
         if (c == '\n'){
-
-
             if (buffer[0] == '\0' ||buffer[0] == '\t'){
                 strcpy(buffer,"\0");
                 length = index;
                 return command;
-
             }
             buffer[k] = '\0';
             command[index] = (char*)malloc(sizeof(char) * strlen(buffer));
@@ -68,7 +59,6 @@ char **takeInput(){
                 continue;
             }
             buffer[k] = '\0';
-
             command[index] = (char*)malloc(sizeof(char) * strlen(buffer));
             strcpy(command[index],buffer);
             strcpy(buffer,"\0");
@@ -95,23 +85,16 @@ char **takeInput(){
                     index++;
                     k = 0;
                 }
-
         }
         else{
             buffer[k] = c;
             k++;
         }
     }
-
-
 }
-
-
-
 int prcs_start(char **args , int background){
   pid_t pid, wpid;
   int status;
-
   pid = fork();
   if (pid == 0) {
     // Child process
@@ -130,7 +113,6 @@ int prcs_start(char **args , int background){
     // Error forking
     perror("ERROR");
   } else {
-    
     // Parent process
     if (!background){
       do {
@@ -143,8 +125,6 @@ int prcs_start(char **args , int background){
 }
   return 1;
 }
-
-
 int main(){
         int background = 0;
         char **tokens;
@@ -157,7 +137,6 @@ int main(){
             if ((!tokens[1] &&  !strcmp(tokens[0],"exit") )){
                 return 0;
             }
-            
             //background check
             if (length>1){
               if (!strcmp(tokens[length -1],"&")){
@@ -165,8 +144,6 @@ int main(){
                 tokens[length -1]= NULL;
                 }
               }
-              
-              
             int j = 0;
             //file I/O check
             while(tokens[j]){
@@ -181,7 +158,6 @@ int main(){
                   argsout[j] = tokens[j];
                   j++;
             }  
-              
             //run
         if(out){
             printf("out to a file: \n");
@@ -190,7 +166,6 @@ int main(){
             printf("out to screen: \n");
             prcs_start(tokens,background);
         }
-            
         }
 return 0;
 }
